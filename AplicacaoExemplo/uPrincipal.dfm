@@ -22,5 +22,14 @@ object frmPrincipal: TfrmPrincipal
     Caption = '...'
     TabOrder = 0
     onClick = SearchMore1Click
+    PesquisaCaption = 'Consulta'
+    PesquisaWidth = 640
+    PesquisaHeight = 480
+    PesquisaTextHintMaskEdit = 'Digite a pesquisa'
+    PesquisaCaptionMaskEdit = 'Pesquisar por ...'
+  end
+  object dtsCategoria: TDataSource
+    Left = 352
+    Top = 32
   end
 end

@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.Dialogs, Vcl.Forms, Vcl.ExtCtrls,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls;
 
 type
   TSearchMore = class(TBitBtn)
@@ -15,9 +15,12 @@ type
     FPesquisaTextHintMaskEdit: string;
     FPesquisaCaptionMaskEdit: string;
     FPesquisaCaptionBotaoIncluir: string;
+    FDataLink: TFieldDataLink;
     { Private declarations }
     procedure Click; override;
     procedure CriarTelaDePesquisa;
+    function GetDataSource: TDataSource;
+    procedure SetDataSource(const Value: TDataSource);
   protected
     { Protected declarations }
   public
@@ -33,6 +36,7 @@ type
     property PesquisaTextHintMaskEdit: string read FPesquisaTextHintMaskEdit write FPesquisaTextHintMaskEdit;
     property PesquisaCaptionMaskEdit: string read FPesquisaCaptionMaskEdit write FPesquisaCaptionMaskEdit;
     property PesquisaCaptionBotaoIncluir: string read FPesquisaCaptionBotaoIncluir write FPesquisaCaptionBotaoIncluir;
+    property PesquisaDataSource: TDataSource read GetDataSource write SetDataSource;
   end;
 
 procedure Register;
@@ -60,11 +64,26 @@ begin
   FPesquisaCaption := 'Consulta';
   FPesquisaTextHintMaskEdit := 'Digite a pesquisa';
   FPesquisaCaptionMaskEdit  := 'Pesquisar por ...';
+  FPesquisaCaptionBotaoIncluir := '&Incluir';
+  FDataLink := TFieldDataLink.Create;
 end;
 
 destructor TSearchMore.Destroy;
 begin
+  if Assigned(FDataLink) then
+    FDataLink.Free;
+
   inherited Destroy;
+end;
+
+function TSearchMore.GetDataSource: TDataSource;
+begin
+  Result := FDataLink.DataSource;
+end;
+
+procedure TSearchMore.SetDataSource(const Value: TDataSource);
+begin
+  FDataLink.DataSource := Value;
 end;
 
 procedure TSearchMore.Click;
@@ -112,6 +131,11 @@ begin
     aDBGrid.Parent    := aForm;
     aDBGrid.Align     := alClient;
     aDBGrid.TabOrder  := 0;
+    aDBGrid.DataSource := GetDataSource;
+    aDBGrid.Options   := [dgTitles, dgIndicator, dgColumnResize, dgColLines,
+                          dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection,
+                          dgConfirmDelete, dgCancelOnExit, dgTitleClick,
+                          dgTitleHotTrack];
 
     aEdt.Parent       := aPnlTop;
     aEdt.Top          := 20;
