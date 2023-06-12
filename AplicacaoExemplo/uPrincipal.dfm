@@ -29,13 +29,14 @@ object frmPrincipal: TfrmPrincipal
     PesquisaTextHintMaskEdit = 'Digite a pesquisa'
     PesquisaCaptionMaskEdit = 'Pesquisar por ...'
     PesquisaCaptionBotaoIncluir = '&Incluir'
+    PesquisaDataSource = dtsCategoriaMSSQL
   end
   object DBGridMSSQL: TDBGrid
     Left = 590
     Top = 71
     Width = 513
     Height = 393
-    DataSource = dtsCategoriaMSSQL
+    DataSource = dtsCategoriaFirebird
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -48,13 +49,29 @@ object frmPrincipal: TfrmPrincipal
     Top = 71
     Width = 513
     Height = 393
-    DataSource = dtsCategoriaFirebird
+    DataSource = dtsCategoriaMSSQL
     TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+  end
+  object SearchMore2: TSearchMore
+    Left = 590
+    Top = 24
+    Width = 25
+    Height = 25
+    Caption = '...'
+    TabOrder = 3
+    onClick = SearchMore1Click
+    PesquisaCaption = 'Consulta'
+    PesquisaWidth = 640
+    PesquisaHeight = 480
+    PesquisaTextHintMaskEdit = 'Digite a pesquisa'
+    PesquisaCaptionMaskEdit = 'Pesquisar por ...'
+    PesquisaCaptionBotaoIncluir = '&Incluir'
+    PesquisaDataSource = dtsCategoriaFirebird
   end
   object dtsCategoriaFirebird: TDataSource
     DataSet = QryCategoriaFirebird

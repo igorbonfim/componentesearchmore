@@ -21,6 +21,7 @@ type
     procedure CriarTelaDePesquisa;
     function GetDataSource: TDataSource;
     procedure SetDataSource(const Value: TDataSource);
+    procedure OnDblClickDbGrid(Sender: TObject);
   protected
     { Protected declarations }
   public
@@ -114,11 +115,11 @@ begin
     aPnlTop           := TPanel.Create(aForm);
     aPnlBottom        := TPanel.Create(aForm);
     aDbGrid           := TDBGrid.Create(aForm);
-    aEdt              := TMaskEdit.Create(aPnlTop);
-    aLbl              := TLabel.Create(aPnlTop);
-    aBtnConfirmar     := TBitBtn.Create(aPnlBottom);
-    aBtnCancelar      := TBitBtn.Create(aPnlBottom);
-    aBtnIncluir       := TBitBtn.Create(aPnlBottom);
+    aEdt              := TMaskEdit.Create(aForm);
+    aLbl              := TLabel.Create(aForm);
+    aBtnConfirmar     := TBitBtn.Create(aForm);
+    aBtnCancelar      := TBitBtn.Create(aForm);
+    aBtnIncluir       := TBitBtn.Create(aForm);
 
     aPnlTop.Parent    := aForm;
     aPnlTop.Align     := alTop;
@@ -136,6 +137,7 @@ begin
                           dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection,
                           dgConfirmDelete, dgCancelOnExit, dgTitleClick,
                           dgTitleHotTrack];
+    aDBGrid.OnDblClick := OnDblClickDbGrid;
 
     aEdt.Parent       := aPnlTop;
     aEdt.Top          := 20;
@@ -158,6 +160,8 @@ begin
     aBtnConfirmar.Top     := 4;
     aBtnCancelar.Top      := 4;
 
+    aBtnConfirmar.Name    := 'aBtnConfirmar';
+
     aBtnConfirmar.Kind    := bkOK;
     aBtnCancelar.Kind     := bkCancel;
 
@@ -168,6 +172,26 @@ begin
     aForm.ShowModal;
   finally
     aForm.Release;
+  end;
+end;
+
+procedure TSearchMore.OnDblClickDbGrid(Sender: TObject);
+var
+  aForm: TCustomForm;
+  i: Integer;
+begin
+  aForm := GetParentForm(TForm(TDBGrid(Sender).Parent));
+
+  for i := 0 to aForm.ComponentCount - 1 do
+  begin
+    if (aForm.Components[i] is TBitBtn) then
+    begin
+      if (aForm.Components[i].Name = 'aBtnConfirmar') then
+      begin
+        TBitBtn(aForm.Components[i]).Click;
+        break;
+      end;
+    end;
   end;
 end;
 

@@ -28,6 +28,7 @@ type
     QryCategoriaMSSQLcategoriaId: TIntegerField;
     QryCategoriaMSSQLdescricao: TWideStringField;
     DBGridFirebird: TDBGrid;
+    SearchMore2: TSearchMore;
     procedure SearchMore1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -54,7 +55,7 @@ end;
 
 procedure TfrmPrincipal.SearchMore1Click(Sender: TObject);
 begin
-  ShowMessage('Mensagem dentro da aplicação');
+ //ShowMessage('Mensagem dentro da aplicação');
 end;
 
 end.
