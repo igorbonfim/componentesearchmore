@@ -30,6 +30,7 @@ object frmPrincipal: TfrmPrincipal
     PesquisaCaptionMaskEdit = 'Pesquisar por ...'
     PesquisaCaptionBotaoIncluir = '&Incluir'
     PesquisaDataSource = dtsCategoriaMSSQL
+    PesquisaIndexConsulta = 'descricao'
   end
   object DBGridMSSQL: TDBGrid
     Left = 590
@@ -45,8 +46,8 @@ object frmPrincipal: TfrmPrincipal
     TitleFont.Style = []
   end
   object DBGridFirebird: TDBGrid
-    Left = 16
-    Top = 71
+    Left = 8
+    Top = 76
     Width = 513
     Height = 393
     DataSource = dtsCategoriaMSSQL
@@ -73,6 +74,14 @@ object frmPrincipal: TfrmPrincipal
     PesquisaCaptionBotaoIncluir = '&Incluir'
     PesquisaDataSource = dtsCategoriaFirebird
   end
+  object Edit1: TEdit
+    Left = 621
+    Top = 26
+    Width = 121
+    Height = 21
+    TabOrder = 4
+    Text = 'Edit1'
+  end
   object dtsCategoriaFirebird: TDataSource
     DataSet = QryCategoriaFirebird
     Left = 952
@@ -92,6 +101,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 16
   end
   object QryCategoriaFirebird: TFDQuery
+    IndexFieldNames = 'descricao'
     Connection = FirebirdConexao
     SQL.Strings = (
       'SELECT * FROM CATEGORIAS')
@@ -134,9 +144,11 @@ object frmPrincipal: TfrmPrincipal
   end
   object QryCategoriaMSSQL: TZQuery
     Connection = SQLServerConexao
+    SortedFields = 'descricao'
     SQL.Strings = (
       'SELECT * FROM CATEGORIAS')
     Params = <>
+    IndexFieldNames = 'descricao Asc'
     Left = 312
     Top = 16
     object QryCategoriaMSSQLcategoriaId: TIntegerField

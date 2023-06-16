@@ -29,6 +29,7 @@ type
     QryCategoriaMSSQLdescricao: TWideStringField;
     DBGridFirebird: TDBGrid;
     SearchMore2: TSearchMore;
+    Edit1: TEdit;
     procedure SearchMore1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private

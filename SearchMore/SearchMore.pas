@@ -16,12 +16,14 @@ type
     FPesquisaCaptionMaskEdit: string;
     FPesquisaCaptionBotaoIncluir: string;
     FDataLink: TFieldDataLink;
+    FPesquisaIndexConsulta: string;
     { Private declarations }
     procedure Click; override;
     procedure CriarTelaDePesquisa;
     function GetDataSource: TDataSource;
     procedure SetDataSource(const Value: TDataSource);
     procedure OnDblClickDbGrid(Sender: TObject);
+    procedure OnChangeEdt(Sender: TObject);
   protected
     { Protected declarations }
   public
@@ -38,6 +40,7 @@ type
     property PesquisaCaptionMaskEdit: string read FPesquisaCaptionMaskEdit write FPesquisaCaptionMaskEdit;
     property PesquisaCaptionBotaoIncluir: string read FPesquisaCaptionBotaoIncluir write FPesquisaCaptionBotaoIncluir;
     property PesquisaDataSource: TDataSource read GetDataSource write SetDataSource;
+    property PesquisaIndexConsulta: string read FPesquisaIndexConsulta write FPesquisaIndexConsulta;
   end;
 
 procedure Register;
@@ -138,12 +141,14 @@ begin
                           dgConfirmDelete, dgCancelOnExit, dgTitleClick,
                           dgTitleHotTrack];
     aDBGrid.OnDblClick := OnDblClickDbGrid;
+    aDBGrid.Name       := 'grdPesquisa';
 
     aEdt.Parent       := aPnlTop;
     aEdt.Top          := 20;
     aEdt.Left         := 5;
     aEdt.Width        := aForm.Width - 15;
     aEdt.Hint         := FPesquisaTextHintMaskEdit;
+    aEdt.OnChange     := OnChangeEdt;
 
     aLbl.Parent       := aPnlTop;
     aLbl.Top          := 5;
@@ -190,6 +195,26 @@ begin
       begin
         TBitBtn(aForm.Components[i]).Click;
         break;
+      end;
+    end;
+  end;
+end;
+
+procedure TSearchMore.OnChangeEdt(Sender: TObject);
+var
+  aForm: TCustomForm;
+  i: Integer;
+begin
+  aForm := GetParentForm(TForm(TPanel(TMaskEdit(Sender).Parent).Parent));
+
+  for i := 0 to aForm.ComponentCount - 1 do
+  begin
+    if (aForm.Components[i] is TDBGrid) then
+    begin
+      if (aForm.Components[i].Name = 'grdPesquisa') then
+      begin
+        TDBGrid(aForm.Components[i]).DataSource.DataSet.Locate(FPesquisaIndexConsulta, TMaskEdit(Sender).Text, [loCaseInsensitive, loPartialKey]);
+        Break;
       end;
     end;
   end;
