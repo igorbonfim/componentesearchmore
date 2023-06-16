@@ -29,7 +29,7 @@ object frmPrincipal: TfrmPrincipal
     PesquisaTextHintMaskEdit = 'Digite a pesquisa'
     PesquisaCaptionMaskEdit = 'Pesquisar por ...'
     PesquisaCaptionBotaoIncluir = '&Incluir'
-    PesquisaDataSource = dtsCategoriaMSSQL
+    DataSource = dtsCategoriaMSSQL
     PesquisaIndexConsulta = 'descricao'
   end
   object DBGridMSSQL: TDBGrid
@@ -72,7 +72,8 @@ object frmPrincipal: TfrmPrincipal
     PesquisaTextHintMaskEdit = 'Digite a pesquisa'
     PesquisaCaptionMaskEdit = 'Pesquisar por ...'
     PesquisaCaptionBotaoIncluir = '&Incluir'
-    PesquisaDataSource = dtsCategoriaFirebird
+    DataSource = dtsCategoriaFirebird
+    PesquisaIndexConsulta = 'DESCRICAO'
   end
   object Edit1: TEdit
     Left = 621

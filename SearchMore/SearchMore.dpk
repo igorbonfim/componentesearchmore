@@ -33,7 +33,9 @@ requires
   vcl,
   vclwinx,
   dbrtl,
-  vcldb;
+  vcldb,
+  designide,
+  dcldb;
 
 contains
   SearchMore in 'SearchMore.pas';

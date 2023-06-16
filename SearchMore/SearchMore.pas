@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.Dialogs, Vcl.Forms, Vcl.ExtCtrls,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls, DesignIntf, DBReg;
 
 type
   TSearchMore = class(TBitBtn)
@@ -16,7 +16,7 @@ type
     FPesquisaCaptionMaskEdit: string;
     FPesquisaCaptionBotaoIncluir: string;
     FDataLink: TFieldDataLink;
-    FPesquisaIndexConsulta: string;
+
     { Private declarations }
     procedure Click; override;
     procedure CriarTelaDePesquisa;
@@ -24,6 +24,8 @@ type
     procedure SetDataSource(const Value: TDataSource);
     procedure OnDblClickDbGrid(Sender: TObject);
     procedure OnChangeEdt(Sender: TObject);
+    function GetPesquisaIndexConsulta: string;
+    procedure SetPesquisaIndexConsulta(const Value: string);
   protected
     { Protected declarations }
   public
@@ -39,8 +41,8 @@ type
     property PesquisaTextHintMaskEdit: string read FPesquisaTextHintMaskEdit write FPesquisaTextHintMaskEdit;
     property PesquisaCaptionMaskEdit: string read FPesquisaCaptionMaskEdit write FPesquisaCaptionMaskEdit;
     property PesquisaCaptionBotaoIncluir: string read FPesquisaCaptionBotaoIncluir write FPesquisaCaptionBotaoIncluir;
-    property PesquisaDataSource: TDataSource read GetDataSource write SetDataSource;
-    property PesquisaIndexConsulta: string read FPesquisaIndexConsulta write FPesquisaIndexConsulta;
+    property DataSource: TDataSource read GetDataSource write SetDataSource;
+    property PesquisaIndexConsulta: string read GetPesquisaIndexConsulta write SetPesquisaIndexConsulta;
   end;
 
 procedure Register;
@@ -53,6 +55,8 @@ implementation
 procedure Register;
 begin
   RegisterComponents('CursoComponenteDelphi', [TSearchMore]);
+
+  RegisterPropertyEditor(TypeInfo(string), TSearchMore, 'PesquisaIndexConsulta', TDataFieldProperty);
 end;
 
 { TSearchMore }
@@ -83,6 +87,16 @@ end;
 function TSearchMore.GetDataSource: TDataSource;
 begin
   Result := FDataLink.DataSource;
+end;
+
+function TSearchMore.GetPesquisaIndexConsulta: string;
+begin
+  Result := FDataLink.FieldName;
+end;
+
+procedure TSearchMore.SetPesquisaIndexConsulta(const Value: string);
+begin
+  FDataLink.FieldName := Value;
 end;
 
 procedure TSearchMore.SetDataSource(const Value: TDataSource);
@@ -213,7 +227,7 @@ begin
     begin
       if (aForm.Components[i].Name = 'grdPesquisa') then
       begin
-        TDBGrid(aForm.Components[i]).DataSource.DataSet.Locate(FPesquisaIndexConsulta, TMaskEdit(Sender).Text, [loCaseInsensitive, loPartialKey]);
+        TDBGrid(aForm.Components[i]).DataSource.DataSet.Locate(GetPesquisaIndexConsulta, TMaskEdit(Sender).Text, [loCaseInsensitive, loPartialKey]);
         Break;
       end;
     end;
