@@ -131,6 +131,7 @@
         <DCCReference Include="designide.dcp"/>
         <DCCReference Include="dcldb.dcp"/>
         <DCCReference Include="SearchMore.pas"/>
+        <DCCReference Include="SearchMoreReg.pas"/>
         <RcItem Include="SearchMore.bmp">
             <ResourceType>BITMAP</ResourceType>
             <ResourceId>TSearchMore</ResourceId>

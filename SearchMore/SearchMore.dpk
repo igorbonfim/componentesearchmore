@@ -38,6 +38,7 @@ requires
   dcldb;
 
 contains
-  SearchMore in 'SearchMore.pas';
+  SearchMore in 'SearchMore.pas',
+  SearchMoreReg in 'SearchMoreReg.pas';
 
 end.

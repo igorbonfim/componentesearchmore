@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.Dialogs, Vcl.Forms, Vcl.ExtCtrls,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls, DesignIntf, DBReg;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls;
 
 type
   TSearchMore = class(TBitBtn)
@@ -45,19 +45,10 @@ type
     property PesquisaIndexConsulta: string read GetPesquisaIndexConsulta write SetPesquisaIndexConsulta;
   end;
 
-procedure Register;
-
 implementation
 
 {$R 'SearchMore.dcr'}
 {$R *.res}
-
-procedure Register;
-begin
-  RegisterComponents('CursoComponenteDelphi', [TSearchMore]);
-
-  RegisterPropertyEditor(TypeInfo(string), TSearchMore, 'PesquisaIndexConsulta', TDataFieldProperty);
-end;
 
 { TSearchMore }
 
