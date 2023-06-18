@@ -22,7 +22,6 @@ object frmPrincipal: TfrmPrincipal
     Height = 25
     Caption = '...'
     TabOrder = 0
-    onClick = SearchMore1Click
     PesquisaCaption = 'Consulta'
     PesquisaWidth = 640
     PesquisaHeight = 480
@@ -31,6 +30,7 @@ object frmPrincipal: TfrmPrincipal
     PesquisaCaptionBotaoIncluir = '&Incluir'
     DataSource = dtsCategoriaMSSQL
     PesquisaIndexConsulta = 'descricao'
+    OnBtnIncluirClick = SearchMore1BtnIncluirClick
   end
   object DBGridMSSQL: TDBGrid
     Left = 590
@@ -65,7 +65,6 @@ object frmPrincipal: TfrmPrincipal
     Height = 25
     Caption = '...'
     TabOrder = 3
-    onClick = SearchMore1Click
     PesquisaCaption = 'Consulta'
     PesquisaWidth = 640
     PesquisaHeight = 480

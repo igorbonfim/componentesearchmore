@@ -30,8 +30,8 @@ type
     DBGridFirebird: TDBGrid;
     SearchMore2: TSearchMore;
     Edit1: TEdit;
-    procedure SearchMore1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure SearchMore1BtnIncluirClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,6 +45,8 @@ implementation
 
 {$R *.dfm}
 
+uses uCadCategoria;
+
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
   FirebirdConexao.Connected := true;
@@ -54,9 +56,11 @@ begin
   QryCategoriaMSSQL.Active := true;
 end;
 
-procedure TfrmPrincipal.SearchMore1Click(Sender: TObject);
+procedure TfrmPrincipal.SearchMore1BtnIncluirClick(Sender: TObject);
 begin
- //ShowMessage('Mensagem dentro da aplicação');
+  frmCadastroCategoria := TfrmCadastroCategoria.Create(Self);
+  frmCadastroCategoria.ShowModal;
+  frmCadastroCategoria.Release;
 end;
 
 end.

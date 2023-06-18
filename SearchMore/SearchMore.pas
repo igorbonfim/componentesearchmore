@@ -16,7 +16,7 @@ type
     FPesquisaCaptionMaskEdit: string;
     FPesquisaCaptionBotaoIncluir: string;
     FDataLink: TFieldDataLink;
-
+    FOnBtnIncluirClick: TNotifyEvent;
     { Private declarations }
     procedure Click; override;
     procedure CriarTelaDePesquisa;
@@ -26,6 +26,7 @@ type
     procedure OnChangeEdt(Sender: TObject);
     function GetPesquisaIndexConsulta: string;
     procedure SetPesquisaIndexConsulta(const Value: string);
+    procedure IncluirOnClick(Sender: TObject);
   protected
     { Protected declarations }
   public
@@ -43,6 +44,7 @@ type
     property PesquisaCaptionBotaoIncluir: string read FPesquisaCaptionBotaoIncluir write FPesquisaCaptionBotaoIncluir;
     property DataSource: TDataSource read GetDataSource write SetDataSource;
     property PesquisaIndexConsulta: string read GetPesquisaIndexConsulta write SetPesquisaIndexConsulta;
+    property OnBtnIncluirClick: TNotifyEvent read FOnBtnIncluirClick write FOnBtnIncluirClick;
   end;
 
 implementation
@@ -178,11 +180,23 @@ begin
     aBtnIncluir.Caption   := FPesquisaCaptionBotaoIncluir;
     aBtnIncluir.Top       := 4;
     aBtnIncluir.Left      := 5;
+    aBtnIncluir.OnClick   := IncluirOnClick;
+
+    if Assigned(FOnBtnIncluirClick) then
+      aBtnIncluir.Visible := true
+    else
+      aBtnIncluir.Visible := false;
 
     aForm.ShowModal;
   finally
     aForm.Release;
   end;
+end;
+
+procedure TSearchMore.IncluirOnClick(Sender: TObject);
+begin
+  if Assigned(FOnBtnIncluirClick) then
+    Self.FOnBtnIncluirClick(Sender);
 end;
 
 procedure TSearchMore.OnDblClickDbGrid(Sender: TObject);
