@@ -58,9 +58,14 @@ end;
 
 procedure TfrmPrincipal.SearchMore1BtnIncluirClick(Sender: TObject);
 begin
-  frmCadastroCategoria := TfrmCadastroCategoria.Create(Self);
-  frmCadastroCategoria.ShowModal;
-  frmCadastroCategoria.Release;
+  Try
+    frmCadastroCategoria := TfrmCadastroCategoria.Create(Self);
+    frmCadastroCategoria.ShowModal;
+
+    QryCategoriaMSSQL.Refresh;
+  Finally
+    frmCadastroCategoria.Release;
+  End;
 end;
 
 end.
