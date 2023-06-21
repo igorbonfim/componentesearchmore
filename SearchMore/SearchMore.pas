@@ -17,6 +17,8 @@ type
     FPesquisaCaptionBotaoIncluir: string;
     FDataLink: TFieldDataLink;
     FOnBtnIncluirClick: TNotifyEvent;
+    FPesquisaControlBookMark: Boolean;
+
     { Private declarations }
     procedure Click; override;
     procedure CriarTelaDePesquisa;
@@ -27,6 +29,9 @@ type
     function GetPesquisaIndexConsulta: string;
     procedure SetPesquisaIndexConsulta(const Value: string);
     procedure IncluirOnClick(Sender: TObject);
+    procedure GetBookMarkRecord(var aBm: TBookMark; Sender: TObject);
+    procedure GoToBookMarkRecord(var aBm: TBookMark; Sender: TObject);
+    procedure FreeBookMarkRecord(var aBm: TBookMark; Sender: TObject);
   protected
     { Protected declarations }
   public
@@ -45,6 +50,7 @@ type
     property DataSource: TDataSource read GetDataSource write SetDataSource;
     property PesquisaIndexConsulta: string read GetPesquisaIndexConsulta write SetPesquisaIndexConsulta;
     property OnBtnIncluirClick: TNotifyEvent read FOnBtnIncluirClick write FOnBtnIncluirClick;
+    property PesquisaControlBookMark: Boolean read FPesquisaControlBookMark write FPesquisaControlBookMark;
   end;
 
 implementation
@@ -194,9 +200,90 @@ begin
 end;
 
 procedure TSearchMore.IncluirOnClick(Sender: TObject);
+var
+  bm: TBookMark;
 begin
-  if Assigned(FOnBtnIncluirClick) then
-    Self.FOnBtnIncluirClick(Sender);
+  if (FPesquisaControlBookMark) then
+  begin
+    Try
+      Try
+        GetBookMarkRecord(bm, Sender);
+
+        if Assigned(FOnBtnIncluirClick) then
+          Self.FOnBtnIncluirClick(Sender);
+
+        GoToBookMarkRecord(bm, Sender);
+      Finally
+        FreeBookMarkRecord(bm,Sender);
+      End;
+    Except
+    End;
+  end
+  else
+  begin
+    if Assigned(FOnBtnIncluirClick) then
+      Self.FOnBtnIncluirClick(Sender);
+  end;
+end;
+
+procedure TSearchMore.GetBookMarkRecord(var aBm: TBookMark; Sender: TObject);
+var
+  aForm: TCustomForm;
+  i: Integer;
+begin
+  aForm := GetParentForm(TForm(TDBGrid(Sender).Parent));
+
+  for i := 0 to aForm.ComponentCount - 1 do
+  begin
+    if (aForm.Components[i] is TDBGrid) then
+    begin
+      if (aForm.Components[i].Name = 'grdPesquisa') then
+      begin
+        aBm := TDBGrid(aForm.Components[i]).DataSource.DataSet.GetBookMark;
+        Break;
+      end;
+    end;
+  end;
+end;
+
+procedure TSearchMore.GoToBookMarkRecord(var aBm: TBookMark; Sender: TObject);
+var
+  aForm: TCustomForm;
+  i: Integer;
+begin
+  aForm := GetParentForm(TForm(TDBGrid(Sender).Parent));
+
+  for i := 0 to aForm.ComponentCount - 1 do
+  begin
+    if (aForm.Components[i] is TDBGrid) then
+    begin
+      if (aForm.Components[i].Name = 'grdPesquisa') then
+      begin
+        TDBGrid(aForm.Components[i]).DataSource.DataSet.GotoBookmark(aBm);
+        Break;
+      end;
+    end;
+  end;
+end;
+
+procedure TSearchMore.FreeBookMarkRecord(var aBm: TBookMark; Sender: TObject);
+var
+  aForm: TCustomForm;
+  i: Integer;
+begin
+  aForm := GetParentForm(TForm(TDBGrid(Sender).Parent));
+
+  for i := 0 to aForm.ComponentCount - 1 do
+  begin
+    if (aForm.Components[i] is TDBGrid) then
+    begin
+      if (aForm.Components[i].Name = 'grdPesquisa') then
+      begin
+        TDBGrid(aForm.Components[i]).DataSource.DataSet.FreeBookmark(aBm);
+        Break;
+      end;
+    end;
+  end;
 end;
 
 procedure TSearchMore.OnDblClickDbGrid(Sender: TObject);

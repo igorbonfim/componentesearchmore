@@ -31,6 +31,7 @@ object frmPrincipal: TfrmPrincipal
     DataSource = dtsCategoriaMSSQL
     PesquisaIndexConsulta = 'descricao'
     OnBtnIncluirClick = SearchMore1BtnIncluirClick
+    PesquisaControlBookMark = True
   end
   object DBGridMSSQL: TDBGrid
     Left = 590
@@ -73,6 +74,7 @@ object frmPrincipal: TfrmPrincipal
     PesquisaCaptionBotaoIncluir = '&Incluir'
     DataSource = dtsCategoriaFirebird
     PesquisaIndexConsulta = 'DESCRICAO'
+    PesquisaControlBookMark = False
   end
   object Edit1: TEdit
     Left = 621
