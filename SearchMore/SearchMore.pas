@@ -18,6 +18,9 @@ type
     FDataLink: TFieldDataLink;
     FOnBtnIncluirClick: TNotifyEvent;
     FPesquisaControlBookMark: Boolean;
+    FPesquisaBtnIncluirGlyph: TPicture;
+    FPesquisaBtnConfirmarGlyph: TPicture;
+    FPesquisaBtnCancelarGlyph: TPicture;
 
     { Private declarations }
     procedure Click; override;
@@ -32,6 +35,9 @@ type
     procedure GetBookMarkRecord(var aBm: TBookMark; Sender: TObject);
     procedure GoToBookMarkRecord(var aBm: TBookMark; Sender: TObject);
     procedure FreeBookMarkRecord(var aBm: TBookMark; Sender: TObject);
+    procedure SetPesquisaBtnIncluirGlyph(const Value: TPicture);
+    procedure SetPesquisaBtnConfirmarGlyph(const Value: TPicture);
+    procedure SetPesquisaBtnCancelarGlyph(const Value: TPicture);
   protected
     { Protected declarations }
   public
@@ -51,6 +57,9 @@ type
     property PesquisaIndexConsulta: string read GetPesquisaIndexConsulta write SetPesquisaIndexConsulta;
     property OnBtnIncluirClick: TNotifyEvent read FOnBtnIncluirClick write FOnBtnIncluirClick;
     property PesquisaControlBookMark: Boolean read FPesquisaControlBookMark write FPesquisaControlBookMark;
+    property PesquisaBtnIncluirGlyph: TPicture read FPesquisaBtnIncluirGlyph write SetPesquisaBtnIncluirGlyph;
+    property PesquisaBtnConfirmarGlyph: TPicture read FPesquisaBtnConfirmarGlyph write SetPesquisaBtnConfirmarGlyph;
+    property PesquisaBtnCancelarGlyph: TPicture read FPesquisaBtnCancelarGlyph write SetPesquisaBtnCancelarGlyph;
   end;
 
 implementation
@@ -73,12 +82,24 @@ begin
   FPesquisaCaptionMaskEdit  := 'Pesquisar por ...';
   FPesquisaCaptionBotaoIncluir := '&Incluir';
   FDataLink := TFieldDataLink.Create;
+  FPesquisaBtnIncluirGlyph := TPicture.Create;
+  FPesquisaBtnConfirmarGlyph := TPicture.Create;
+  FPesquisaBtnCancelarGlyph := TPicture.Create;
 end;
 
 destructor TSearchMore.Destroy;
 begin
   if Assigned(FDataLink) then
     FDataLink.Free;
+
+  if Assigned(FPesquisaBtnIncluirGlyph) then
+    FPesquisaBtnIncluirGlyph.Free;
+
+  if Assigned(FPesquisaBtnConfirmarGlyph) then
+    FPesquisaBtnConfirmarGlyph.Free;
+
+  if Assigned(FPesquisaBtnCancelarGlyph) then
+    FPesquisaBtnCancelarGlyph.Free;
 
   inherited Destroy;
 end;
@@ -91,6 +112,21 @@ end;
 function TSearchMore.GetPesquisaIndexConsulta: string;
 begin
   Result := FDataLink.FieldName;
+end;
+
+procedure TSearchMore.SetPesquisaBtnCancelarGlyph(const Value: TPicture);
+begin
+  FPesquisaBtnCancelarGlyph.Assign(Value);
+end;
+
+procedure TSearchMore.SetPesquisaBtnConfirmarGlyph(const Value: TPicture);
+begin
+  FPesquisaBtnConfirmarGlyph.Assign(Value);
+end;
+
+procedure TSearchMore.SetPesquisaBtnIncluirGlyph(const Value: TPicture);
+begin
+  FPesquisaBtnIncluirGlyph.Assign(Value);
 end;
 
 procedure TSearchMore.SetPesquisaIndexConsulta(const Value: string);
@@ -180,13 +216,30 @@ begin
 
     aBtnConfirmar.Name    := 'aBtnConfirmar';
 
-    aBtnConfirmar.Kind    := bkOK;
-    aBtnCancelar.Kind     := bkCancel;
+    aBtnConfirmar.ModalResult := mrOk;
+    aBtnCancelar.ModalResult  := mrCancel;
+    aBtnCancelar.Caption  := 'Cancelar';
 
     aBtnIncluir.Caption   := FPesquisaCaptionBotaoIncluir;
     aBtnIncluir.Top       := 4;
     aBtnIncluir.Left      := 5;
     aBtnIncluir.OnClick   := IncluirOnClick;
+
+    if FPesquisaBtnIncluirGlyph.Graphic <> nil then
+      aBtnIncluir.Glyph.Assign(FPesquisaBtnIncluirGlyph);
+
+    if FPesquisaBtnConfirmarGlyph.Graphic <> nil then
+    begin
+      aBtnConfirmar.Glyph.Assign(FPesquisaBtnConfirmarGlyph);
+      aBtnConfirmar.Caption := 'OK'
+    end
+    else
+      aBtnConfirmar.Kind := bkOK;
+
+    if FPesquisaBtnCancelarGlyph.Graphic <> nil then
+      aBtnCancelar.Glyph.Assign(FPesquisaBtnCancelarGlyph)
+    else
+      aBtnCancelar.Kind := bkCancel;
 
     if Assigned(FOnBtnIncluirClick) then
       aBtnIncluir.Visible := true
