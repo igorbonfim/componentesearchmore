@@ -246,7 +246,11 @@ begin
     else
       aBtnIncluir.Visible := false;
 
-    aForm.ShowModal;
+    if (aForm.ShowModal = mrOk) then
+    begin
+      ShowMessage(aDBGrid.DataSource.DataSet.FieldByName('categoriaId').AsString);
+    end;
+
   finally
     aForm.Release;
   end;
