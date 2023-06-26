@@ -15,6 +15,8 @@ begin
   RegisterComponents('CursoComponenteDelphi', [TSearchMore]);
 
   RegisterPropertyEditor(TypeInfo(string), TSearchMore, 'PesquisaIndexConsulta', TDataFieldProperty);
+  RegisterPropertyEditor(TypeInfo(string), TSearchMore, 'PesquisaResultFieldKey', TDataFieldProperty);
+  RegisterPropertyEditor(TypeInfo(string), TSearchMore, 'PesquisaResultDescription', TDataFieldProperty);
 end;
 
 end.

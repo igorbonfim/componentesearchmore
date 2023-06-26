@@ -16,11 +16,15 @@ type
     FPesquisaCaptionMaskEdit: string;
     FPesquisaCaptionBotaoIncluir: string;
     FDataLink: TFieldDataLink;
+    FDataLinkFieldKey: TFieldDataLink;
+    FDataLinkFieldDescription: TFieldDataLink;
     FOnBtnIncluirClick: TNotifyEvent;
     FPesquisaControlBookMark: Boolean;
     FPesquisaBtnIncluirGlyph: TPicture;
     FPesquisaBtnConfirmarGlyph: TPicture;
     FPesquisaBtnCancelarGlyph: TPicture;
+    FPesquisaResultEditFieldKey: TEdit;
+    FPesquisaResultEditFieldDescription: TEdit;
 
     { Private declarations }
     procedure Click; override;
@@ -38,6 +42,10 @@ type
     procedure SetPesquisaBtnIncluirGlyph(const Value: TPicture);
     procedure SetPesquisaBtnConfirmarGlyph(const Value: TPicture);
     procedure SetPesquisaBtnCancelarGlyph(const Value: TPicture);
+    function GetPesquisaResultDescription: string;
+    function GetPesquisaResultFieldKey: string;
+    procedure SetPesquisaResultDescription(const Value: string);
+    procedure SetPesquisaResultFieldKey(const Value: string);
   protected
     { Protected declarations }
   public
@@ -60,6 +68,10 @@ type
     property PesquisaBtnIncluirGlyph: TPicture read FPesquisaBtnIncluirGlyph write SetPesquisaBtnIncluirGlyph;
     property PesquisaBtnConfirmarGlyph: TPicture read FPesquisaBtnConfirmarGlyph write SetPesquisaBtnConfirmarGlyph;
     property PesquisaBtnCancelarGlyph: TPicture read FPesquisaBtnCancelarGlyph write SetPesquisaBtnCancelarGlyph;
+    property PesquisaResultFieldKey: string read GetPesquisaResultFieldKey write SetPesquisaResultFieldKey;
+    property PesquisaResultDescription: string read GetPesquisaResultDescription write SetPesquisaResultDescription;
+    property PesquisaResultEditFieldKey: TEdit read FPesquisaResultEditFieldKey write FPesquisaResultEditFieldKey;
+    property PesquisaResultEditFieldDescription: TEdit read FPesquisaResultEditFieldDescription write FPesquisaResultEditFieldDescription;
   end;
 
 implementation
@@ -82,6 +94,8 @@ begin
   FPesquisaCaptionMaskEdit  := 'Pesquisar por ...';
   FPesquisaCaptionBotaoIncluir := '&Incluir';
   FDataLink := TFieldDataLink.Create;
+  FDataLinkFieldKey := TFieldDataLink.Create;
+  FDataLinkFieldDescription := TFieldDataLink.Create;
   FPesquisaBtnIncluirGlyph := TPicture.Create;
   FPesquisaBtnConfirmarGlyph := TPicture.Create;
   FPesquisaBtnCancelarGlyph := TPicture.Create;
@@ -91,6 +105,12 @@ destructor TSearchMore.Destroy;
 begin
   if Assigned(FDataLink) then
     FDataLink.Free;
+
+  if Assigned(FDataLinkFieldKey) then
+    FDataLinkFieldKey.Free;
+
+  if Assigned(FDataLinkFieldDescription) then
+    FDataLinkFieldDescription.Free;
 
   if Assigned(FPesquisaBtnIncluirGlyph) then
     FPesquisaBtnIncluirGlyph.Free;
@@ -114,6 +134,16 @@ begin
   Result := FDataLink.FieldName;
 end;
 
+function TSearchMore.GetPesquisaResultDescription: string;
+begin
+  Result := FDataLinkFieldDescription.FieldName;
+end;
+
+function TSearchMore.GetPesquisaResultFieldKey: string;
+begin
+  Result := FDataLinkFieldKey.FieldName;
+end;
+
 procedure TSearchMore.SetPesquisaBtnCancelarGlyph(const Value: TPicture);
 begin
   FPesquisaBtnCancelarGlyph.Assign(Value);
@@ -132,6 +162,16 @@ end;
 procedure TSearchMore.SetPesquisaIndexConsulta(const Value: string);
 begin
   FDataLink.FieldName := Value;
+end;
+
+procedure TSearchMore.SetPesquisaResultDescription(const Value: string);
+begin
+  FDataLinkFieldDescription.FieldName := Value;
+end;
+
+procedure TSearchMore.SetPesquisaResultFieldKey(const Value: string);
+begin
+  FDataLinkFieldKey.FieldName := Value;
 end;
 
 procedure TSearchMore.SetDataSource(const Value: TDataSource);
@@ -248,7 +288,21 @@ begin
 
     if (aForm.ShowModal = mrOk) then
     begin
-      ShowMessage(aDBGrid.DataSource.DataSet.FieldByName('categoriaId').AsString);
+      if (GetPesquisaResultFieldKey <> EmptyStr) then
+      begin
+        if Assigned(FPesquisaResultEditFieldKey) then
+        begin
+          FPesquisaResultEditFieldKey.Text := aDBGrid.DataSource.DataSet.FieldByName(GetPesquisaResultFieldKey).AsString;
+        end;
+      end;
+
+      if (GetPesquisaResultDescription <> EmptyStr) then
+      begin
+        if Assigned(FPesquisaResultEditFieldDescription) then
+        begin
+          FPesquisaResultEditFieldDescription.Text := aDBGrid.DataSource.DataSet.FieldByName(GetPesquisaResultDescription).AsString;
+        end;
+      end;
     end;
 
   finally

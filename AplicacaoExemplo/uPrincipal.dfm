@@ -2,8 +2,8 @@ object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'Aplica'#231#227'o Exemplo'
-  ClientHeight = 477
-  ClientWidth = 1117
+  ClientHeight = 154
+  ClientWidth = 648
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object frmPrincipal: TfrmPrincipal
   PixelsPerInch = 96
   TextHeight = 13
   object SearchMore1: TSearchMore
-    Left = 152
-    Top = 24
+    Left = 56
+    Top = 40
     Width = 25
     Height = 25
     Caption = '...'
@@ -119,40 +119,18 @@ object frmPrincipal: TfrmPrincipal
       FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
       FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
       00FF}
-  end
-  object DBGridMSSQL: TDBGrid
-    Left = 590
-    Top = 71
-    Width = 513
-    Height = 393
-    DataSource = dtsCategoriaFirebird
-    TabOrder = 1
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
-  end
-  object DBGridFirebird: TDBGrid
-    Left = 8
-    Top = 76
-    Width = 513
-    Height = 393
-    DataSource = dtsCategoriaMSSQL
-    TabOrder = 2
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
+    PesquisaResultFieldKey = 'categoriaId'
+    PesquisaResultDescription = 'descricao'
+    PesquisaResultEditFieldKey = edtCategoriaIdSQLServer
+    PesquisaResultEditFieldDescription = edtCategoriaDescricaoSQLServer
   end
   object SearchMore2: TSearchMore
-    Left = 590
-    Top = 24
+    Left = 56
+    Top = 96
     Width = 25
     Height = 25
     Caption = '...'
-    TabOrder = 3
+    TabOrder = 1
     PesquisaCaption = 'Consulta'
     PesquisaWidth = 640
     PesquisaHeight = 480
@@ -163,18 +141,38 @@ object frmPrincipal: TfrmPrincipal
     PesquisaIndexConsulta = 'DESCRICAO'
     PesquisaControlBookMark = False
   end
-  object Edit1: TEdit
-    Left = 621
-    Top = 26
-    Width = 121
+  object edtCategoriaIdSQLServer: TEdit
+    Left = 8
+    Top = 42
+    Width = 49
     Height = 21
+    TabOrder = 2
+  end
+  object edtCategoriaDescricaoSQLServer: TEdit
+    Left = 81
+    Top = 42
+    Width = 197
+    Height = 21
+    TabOrder = 3
+  end
+  object edtCategoriaIdFirebird: TEdit
+    Left = 7
+    Top = 98
+    Width = 49
+    Height = 20
     TabOrder = 4
-    Text = 'Edit1'
+  end
+  object edtCategoriaDescricaoFirebird: TEdit
+    Left = 81
+    Top = 98
+    Width = 197
+    Height = 21
+    TabOrder = 5
   end
   object dtsCategoriaFirebird: TDataSource
     DataSet = QryCategoriaFirebird
-    Left = 952
-    Top = 16
+    Left = 464
+    Top = 80
   end
   object FirebirdConexao: TFDConnection
     Params.Strings = (
@@ -186,16 +184,16 @@ object frmPrincipal: TfrmPrincipal
       'DriverID=FB')
     Connected = True
     LoginPrompt = False
-    Left = 1048
-    Top = 16
+    Left = 560
+    Top = 80
   end
   object QryCategoriaFirebird: TFDQuery
     IndexFieldNames = 'descricao'
     Connection = FirebirdConexao
     SQL.Strings = (
       'SELECT * FROM CATEGORIAS')
-    Left = 848
-    Top = 16
+    Left = 360
+    Top = 80
     object QryCategoriaFirebirdCATEGORIAID: TIntegerField
       DisplayLabel = 'ID'
       FieldName = 'CATEGORIAID'
@@ -228,8 +226,8 @@ object frmPrincipal: TfrmPrincipal
     LibraryLocation = 
       'C:\Projetos\Curso Delphi Criando componentes na pr'#225'tica\Aplicaca' +
       'oExemplo\ntwdblib.dll'
-    Left = 232
-    Top = 16
+    Left = 346
+    Top = 18
   end
   object QryCategoriaMSSQL: TZQuery
     Connection = SQLServerConexao
@@ -238,8 +236,8 @@ object frmPrincipal: TfrmPrincipal
       'SELECT * FROM CATEGORIAS')
     Params = <>
     IndexFieldNames = 'descricao Asc'
-    Left = 312
-    Top = 16
+    Left = 447
+    Top = 18
     object QryCategoriaMSSQLcategoriaId: TIntegerField
       DisplayLabel = 'ID'
       FieldName = 'categoriaId'
@@ -254,7 +252,15 @@ object frmPrincipal: TfrmPrincipal
   end
   object dtsCategoriaMSSQL: TDataSource
     DataSet = QryCategoriaMSSQL
-    Left = 400
-    Top = 16
+    Left = 551
+    Top = 18
+  end
+  object QryProduto: TZQuery
+    Connection = SQLServerConexao
+    SQL.Strings = (
+      'SELECT * FROM PRODUTOS')
+    Params = <>
+    Left = 96
+    Top = 32
   end
 end

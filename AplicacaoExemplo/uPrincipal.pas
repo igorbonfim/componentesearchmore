@@ -21,15 +21,17 @@ type
     QryCategoriaFirebird: TFDQuery;
     QryCategoriaFirebirdCATEGORIAID: TIntegerField;
     QryCategoriaFirebirdDESCRICAO: TStringField;
-    DBGridMSSQL: TDBGrid;
     SQLServerConexao: TZConnection;
     QryCategoriaMSSQL: TZQuery;
     dtsCategoriaMSSQL: TDataSource;
     QryCategoriaMSSQLcategoriaId: TIntegerField;
     QryCategoriaMSSQLdescricao: TWideStringField;
-    DBGridFirebird: TDBGrid;
     SearchMore2: TSearchMore;
-    Edit1: TEdit;
+    edtCategoriaIdSQLServer: TEdit;
+    edtCategoriaDescricaoSQLServer: TEdit;
+    edtCategoriaIdFirebird: TEdit;
+    edtCategoriaDescricaoFirebird: TEdit;
+    QryProduto: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure SearchMore1BtnIncluirClick(Sender: TObject);
   private
