@@ -11,7 +11,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, Vcl.Grids, Vcl.DBGrids,
   ZAbstractConnection, ZConnection, ZAbstractRODataset, ZAbstractDataset,
-  ZDataset;
+  ZDataset, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls;
 
 type
   TfrmPrincipal = class(TForm)
@@ -32,6 +32,17 @@ type
     edtCategoriaIdFirebird: TEdit;
     edtCategoriaDescricaoFirebird: TEdit;
     QryProduto: TZQuery;
+    dtsProduto: TDataSource;
+    edtDbCadCategoria: TDBEdit;
+    QryProdutoprodutoId: TIntegerField;
+    QryProdutonome: TWideStringField;
+    QryProdutovalor: TFloatField;
+    QryProdutoquantidade: TFloatField;
+    QryProdutocategoriaId: TIntegerField;
+    SearchMore3: TSearchMore;
+    edtCategoriaDescricaoDBEdit: TEdit;
+    Label1: TLabel;
+    DBNavigator1: TDBNavigator;
     procedure FormCreate(Sender: TObject);
     procedure SearchMore1BtnIncluirClick(Sender: TObject);
   private
@@ -56,6 +67,7 @@ begin
 
   QryCategoriaFirebird.Active := true;
   QryCategoriaMSSQL.Active := true;
+  QryProduto.Active := true;
 end;
 
 procedure TfrmPrincipal.SearchMore1BtnIncluirClick(Sender: TObject);

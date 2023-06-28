@@ -2,7 +2,7 @@ object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
   Caption = 'Aplica'#231#227'o Exemplo'
-  ClientHeight = 154
+  ClientHeight = 229
   ClientWidth = 648
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,6 +15,19 @@ object frmPrincipal: TfrmPrincipal
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 146
+    Width = 107
+    Height = 16
+    Caption = 'EXEMPLO DBEDIT'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object SearchMore1: TSearchMore
     Left = 56
     Top = 40
@@ -140,6 +153,10 @@ object frmPrincipal: TfrmPrincipal
     DataSource = dtsCategoriaFirebird
     PesquisaIndexConsulta = 'DESCRICAO'
     PesquisaControlBookMark = False
+    PesquisaResultFieldKey = 'CATEGORIAID'
+    PesquisaResultDescription = 'DESCRICAO'
+    PesquisaResultEditFieldKey = edtCategoriaIdFirebird
+    PesquisaResultEditFieldDescription = edtCategoriaDescricaoFirebird
   end
   object edtCategoriaIdSQLServer: TEdit
     Left = 8
@@ -153,13 +170,15 @@ object frmPrincipal: TfrmPrincipal
     Top = 42
     Width = 197
     Height = 21
+    Enabled = False
+    ParentColor = True
     TabOrder = 3
   end
   object edtCategoriaIdFirebird: TEdit
     Left = 7
     Top = 98
     Width = 49
-    Height = 20
+    Height = 21
     TabOrder = 4
   end
   object edtCategoriaDescricaoFirebird: TEdit
@@ -167,7 +186,56 @@ object frmPrincipal: TfrmPrincipal
     Top = 98
     Width = 197
     Height = 21
+    Enabled = False
+    ParentColor = True
     TabOrder = 5
+  end
+  object edtDbCadCategoria: TDBEdit
+    Left = 8
+    Top = 168
+    Width = 49
+    Height = 21
+    DataField = 'categoriaId'
+    DataSource = dtsProduto
+    TabOrder = 6
+  end
+  object SearchMore3: TSearchMore
+    Left = 56
+    Top = 165
+    Width = 25
+    Height = 25
+    Caption = '...'
+    TabOrder = 7
+    PesquisaCaption = 'Consulta'
+    PesquisaWidth = 640
+    PesquisaHeight = 480
+    PesquisaTextHintMaskEdit = 'Digite a pesquisa'
+    PesquisaCaptionMaskEdit = 'Pesquisar por ...'
+    PesquisaCaptionBotaoIncluir = '&Incluir'
+    DataSource = dtsCategoriaMSSQL
+    PesquisaIndexConsulta = 'DESCRICAO'
+    PesquisaControlBookMark = False
+    PesquisaResultFieldKey = 'CATEGORIAID'
+    PesquisaResultDescription = 'DESCRICAO'
+    PesquisaResultEditFieldDescription = edtCategoriaDescricaoDBEdit
+    PesquisaResultDBEditFieldKey = edtDbCadCategoria
+  end
+  object edtCategoriaDescricaoDBEdit: TEdit
+    Left = 81
+    Top = 167
+    Width = 197
+    Height = 21
+    Enabled = False
+    ParentColor = True
+    TabOrder = 8
+  end
+  object DBNavigator1: TDBNavigator
+    Left = 8
+    Top = 196
+    Width = 240
+    Height = 25
+    DataSource = dtsProduto
+    TabOrder = 9
   end
   object dtsCategoriaFirebird: TDataSource
     DataSet = QryCategoriaFirebird
@@ -260,7 +328,29 @@ object frmPrincipal: TfrmPrincipal
     SQL.Strings = (
       'SELECT * FROM PRODUTOS')
     Params = <>
-    Left = 96
-    Top = 32
+    Left = 352
+    Top = 160
+    object QryProdutoprodutoId: TIntegerField
+      FieldName = 'produtoId'
+      ReadOnly = True
+    end
+    object QryProdutonome: TWideStringField
+      FieldName = 'nome'
+      Size = 60
+    end
+    object QryProdutovalor: TFloatField
+      FieldName = 'valor'
+    end
+    object QryProdutoquantidade: TFloatField
+      FieldName = 'quantidade'
+    end
+    object QryProdutocategoriaId: TIntegerField
+      FieldName = 'categoriaId'
+    end
+  end
+  object dtsProduto: TDataSource
+    DataSet = QryProduto
+    Left = 456
+    Top = 160
   end
 end

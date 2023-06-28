@@ -25,6 +25,7 @@ type
     FPesquisaBtnCancelarGlyph: TPicture;
     FPesquisaResultEditFieldKey: TEdit;
     FPesquisaResultEditFieldDescription: TEdit;
+    FPesquisaResultDBEditFieldKey: TDBEdit;
 
     { Private declarations }
     procedure Click; override;
@@ -72,6 +73,7 @@ type
     property PesquisaResultDescription: string read GetPesquisaResultDescription write SetPesquisaResultDescription;
     property PesquisaResultEditFieldKey: TEdit read FPesquisaResultEditFieldKey write FPesquisaResultEditFieldKey;
     property PesquisaResultEditFieldDescription: TEdit read FPesquisaResultEditFieldDescription write FPesquisaResultEditFieldDescription;
+    property PesquisaResultDBEditFieldKey: TDBEdit read FPesquisaResultDBEditFieldKey write FPesquisaResultDBEditFieldKey;
   end;
 
 implementation
@@ -293,6 +295,11 @@ begin
         if Assigned(FPesquisaResultEditFieldKey) then
         begin
           FPesquisaResultEditFieldKey.Text := aDBGrid.DataSource.DataSet.FieldByName(GetPesquisaResultFieldKey).AsString;
+        end;
+
+        if Assigned(FPesquisaResultDBEditFieldKey) then
+        begin
+          FPesquisaResultDBEditFieldKey.Field.Text := aDBGrid.DataSource.DataSet.FieldByName(GetPesquisaResultFieldKey).AsString;
         end;
       end;
 
