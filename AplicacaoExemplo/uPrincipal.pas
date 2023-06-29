@@ -11,7 +11,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, Vcl.Grids, Vcl.DBGrids,
   ZAbstractConnection, ZConnection, ZAbstractRODataset, ZAbstractDataset,
-  ZDataset, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls, EditClickKey;
+  ZDataset, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls, EditClickKey, DBEditClickKey;
 
 type
   TfrmPrincipal = class(TForm)
@@ -46,6 +46,10 @@ type
     edtClickKeyCategoriaID: TEditClickKey;
     SmClickKey: TSearchMore;
     edtDescricaoClickKey: TEdit;
+    edtDBEditClickKeyID: TDBEditClickKey;
+    DBNavigator2: TDBNavigator;
+    SearchMore4: TSearchMore;
+    edtDBEditClickKeyDescricao: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure SearchMore1BtnIncluirClick(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
