@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{3E529F0E-AA6C-4581-AF11-280CB2A43DAD}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="EditClickKey.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="EditClickKey">
+        <MSBuild Projects="EditClickKey.dproj"/>
+    </Target>
+    <Target Name="EditClickKey:Clean">
+        <MSBuild Projects="EditClickKey.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="EditClickKey:Make">
+        <MSBuild Projects="EditClickKey.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="EditClickKey"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="EditClickKey:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="EditClickKey:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

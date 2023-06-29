@@ -11,7 +11,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, Vcl.Grids, Vcl.DBGrids,
   ZAbstractConnection, ZConnection, ZAbstractRODataset, ZAbstractDataset,
-  ZDataset, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls;
+  ZDataset, Vcl.Mask, Vcl.DBCtrls, Vcl.ExtCtrls, EditClickKey;
 
 type
   TfrmPrincipal = class(TForm)
@@ -43,8 +43,12 @@ type
     edtCategoriaDescricaoDBEdit: TEdit;
     Label1: TLabel;
     DBNavigator1: TDBNavigator;
+    edtClickKeyCategoriaID: TEditClickKey;
+    SmClickKey: TSearchMore;
+    edtDescricaoClickKey: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure SearchMore1BtnIncluirClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -59,6 +63,11 @@ implementation
 {$R *.dfm}
 
 uses uCadCategoria;
+
+procedure TfrmPrincipal.BitBtn1Click(Sender: TObject);
+begin
+  ShowMessage('TESTE');
+end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
