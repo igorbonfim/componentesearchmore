@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, Vcl.Controls, Vcl.StdCtrls, Vcl.Buttons, Vcl.Dialogs, Vcl.Forms, Vcl.ExtCtrls,
-  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls;
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Graphics, Vcl.Mask, Vcl.DBCtrls, System.UITypes;
 
 type
   TSearchMore = class(TBitBtn)
@@ -233,11 +233,12 @@ begin
                           dgTitleHotTrack];
     aDBGrid.OnDblClick := OnDblClickDbGrid;
     aDBGrid.Name       := 'grdPesquisa';
+    aDBGrid.AlignWithMargins := true;
 
     aEdt.Parent       := aPnlTop;
     aEdt.Top          := 20;
     aEdt.Left         := 5;
-    aEdt.Width        := aForm.Width - 15;
+    aEdt.Width        := 400;
     aEdt.Hint         := FPesquisaTextHintMaskEdit;
     aEdt.OnChange     := OnChangeEdt;
 
@@ -250,8 +251,8 @@ begin
     aBtnCancelar.Parent   := aPnlBottom;
     aBtnIncluir.Parent    := aPnlBottom;
 
-    aBtnConfirmar.Left    := (aForm.Width - (aBtnConfirmar.Width + aBtnCancelar.Width) - 15);
-    aBtnCancelar.Left     := (aForm.Width - aBtnConfirmar.Width - 15);
+    aBtnConfirmar.Left    := (aForm.Width - (aBtnConfirmar.Width + aBtnCancelar.Width) - 25);
+    aBtnCancelar.Left     := (aForm.Width - aBtnConfirmar.Width - 25);
 
     aBtnConfirmar.Top     := 4;
     aBtnCancelar.Top      := 4;
@@ -261,6 +262,9 @@ begin
     aBtnConfirmar.ModalResult := mrOk;
     aBtnCancelar.ModalResult  := mrCancel;
     aBtnCancelar.Caption  := 'Cancelar';
+
+    aBtnConfirmar.AlignWithMargins := true;
+    aBtnCancelar.AlignWithMargins := true;
 
     aBtnIncluir.Caption   := FPesquisaCaptionBotaoIncluir;
     aBtnIncluir.Top       := 4;
